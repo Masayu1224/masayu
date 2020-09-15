@@ -45,6 +45,12 @@
       twttr.widgets.load();
   };
 
+  userNameInput.onkeydown = (event) => {
+      if (event.keyCode === 13) {
+          assessmentButton.onclick();
+      }
+  };
+
   const answers = [
       '{userName}のいいところは声です。{userName}の特徴的な声はみなを惹きつけ、心に残ります。',
       '{userName}のいいところはまなざしです。{userName}に見つめられた人は、気になって仕方がないでしょう。',
@@ -72,7 +78,7 @@
   function assessment(userName) {
       // 全文字のコード番号を取得してそれを足し合わせる
       let sumOfcharCode = 0;
-      for (let i = 0; i < userNamelength; i++) {
+      for (let i = 0; i < userName.length; i++) {
           sumOfcharCode = sumOfcharCode + userName.charCodeAt(i);
       }
 
@@ -80,7 +86,7 @@
       const index = sumOfcharCode % answers.length;
       let result = answers[index];
 
-      result = result.replace(/{userName]/g, userName);
+      result = result.replace(/{userName}/g, userName);
       return result;
   }
 
@@ -89,6 +95,7 @@
       assessment('太郎') === '太郎のいいところは決断力です。太郎がする決断にいつも助けられる人がいます。',
       '診断結果の文言の特定の部分を名前に置き換える処理が正しくありません。'
   );
+
   console.assert(
   assessment('太郎') === assessment('太郎'),
   '入力が同じ名前なら同じ診断結果を出力する処理が正しくありません。'
